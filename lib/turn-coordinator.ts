@@ -96,8 +96,8 @@ export function beginTurn(input: {
     observeOnly?: boolean;
 }): TurnHandle | null {
     const { kind, characterId, sessionId, observeOnly = false } = input;
-    if (!characterId || !sessionId) return null;
-    const key = characterKey(characterId);
+    if (!sessionId) return null;
+    const key = characterKey(characterId || ("session:" + sessionId));
     const priority = TURN_PRIORITY[kind];
     const current = activeByCharacter.get(key);
 
