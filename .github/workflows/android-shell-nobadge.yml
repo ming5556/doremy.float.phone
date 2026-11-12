@@ -48,6 +48,12 @@ jobs:
         with:
           gradle-version: "8.11.1"
 
+      - name: Bump version for this build
+        run: |
+          sed -i 's/^        versionCode 28$/        versionCode 29/' android-shell/app/build.gradle
+          sed -i 's/^        versionName "1.0.29"$/        versionName "1.0.30-nobadge"/' android-shell/app/build.gradle
+          grep -n 'versionCode\|versionName' android-shell/app/build.gradle
+
       - name: Decode keystore
         run: |
           if [ -z "$SHELL_KEYSTORE_BASE64" ]; then
@@ -62,6 +68,6 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: float-shell-release-nobadge
+          name: float-shell-release-nobadge-v3
           path: android-shell/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
